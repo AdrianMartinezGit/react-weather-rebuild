@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useEffect } from "react";
-import { getWeatherData, getWeatherForecastData } from "@/utils/dataservice";
+import { getWeatherData, getWeatherForecastData } from "@/app/utils/dataservice";
+import SearchBarComponent from "./components/SearchBarComponent";
 
 export default function Home() {
   useEffect(() => {
@@ -16,6 +17,8 @@ export default function Home() {
   return (
     <>
       <div className="gradient-weather-backdrop"></div>
+      <SearchBarComponent/>
+
     </>
   );
 }

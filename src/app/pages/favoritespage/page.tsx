@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react'
 
-const favoritespage = () => {
+const page = () => {
   return (
     <div>
       
@@ -8,4 +10,4 @@ const favoritespage = () => {
   )
 }
 
-export default favoritespage
+export default page
