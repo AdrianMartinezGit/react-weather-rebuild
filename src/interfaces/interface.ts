@@ -25,9 +25,12 @@ export interface Coord {
 
 export interface Main {
     feels_like: number,
+    grnd_level?: number,
     humidity: number,
     pressure: number,
+    sea_level?: number,
     temp: number,
+    temp_kf?: number,
     temp_max: number,
     temp_min: number
 } 
@@ -49,5 +52,46 @@ export interface Weather {
 
 export interface Wind {
     deg: number,
+    gust?: number,
     speed: number
+}
+
+export interface IWeatherForecastData {
+    city: City,
+    cnt: number,
+    cod: string,
+    list: List[],
+    message: 0
+}
+
+export interface City {
+    coord: Coord,
+    country: string,
+    id: number,
+    name: string,
+    population: number,
+    sunrise: number,
+    sunset: number,
+    timezone: number
+}
+
+export interface List {
+    clouds: All,
+    dt: number,
+    dt_txt: string,
+    main: Main,
+    pop: number,
+    snow: Snow,
+    sys: Sys1,
+    visibility: number,
+    weather: Weather[],
+    wind: Wind
+}
+
+export interface Snow {
+    '3h': number
+}
+
+export interface Sys1 {
+    pod: string
 }
