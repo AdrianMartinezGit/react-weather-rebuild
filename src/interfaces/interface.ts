@@ -95,3 +95,25 @@ export interface Snow {
 export interface Sys1 {
     pod: string
 }
+
+export interface IGeocodeData {
+    country: string,
+    lat: number,
+    local_names: LocalNames,
+    lon: number,
+    name: string,
+    state: string
+}
+
+export interface LocalNames {
+    en: string
+}
+
+export interface IWeatherForecastProps {
+    dayweek: string,
+    daymonth: string,
+    daytemp: string,
+    dayicon: string,
+    daystat: string
+
+}
