@@ -2,12 +2,13 @@
 
 import FavoriteComponent from '@/app/components/FavoriteComponent'
 import SearchBarComponent from '@/app/components/SearchBarComponent'
+import { getLocalStorage } from '@/app/utils/localstorage'
 import React, { useEffect } from 'react'
 
 export default function page() {
 
   useEffect(() => {
-
+    const favorites: string[] = getLocalStorage();
   }, [])
 
   return (
