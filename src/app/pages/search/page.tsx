@@ -3,7 +3,7 @@
 import SearchBarComponent from '@/app/components/SearchBarComponent'
 import React from 'react'
 
-export default function page() {
+export default function Page() {
 
 
   return (

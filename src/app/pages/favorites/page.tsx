@@ -5,7 +5,7 @@ import SearchBarComponent from '@/app/components/SearchBarComponent'
 import { getLocalStorage } from '@/app/utils/localstorage'
 import React, { useEffect, useState } from 'react'
 
-export default function page() {
+export default function Page() {
   const [weatherFavorites, setWeatherFavorites] = useState<string[]>([]);
   
   useEffect(() => {
