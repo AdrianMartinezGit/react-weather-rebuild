@@ -23,7 +23,6 @@ export default function Home() {
   const [maxTemp, setMaxTemp] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<string>('');
   const [weatherStatus, setWeatherStatus] = useState<string>('--------------');
-  const [tempToggle, setTempToggle] = useState<boolean>(false);
 
   const [dayOneFieldOne, setDayOneFieldOne] = useState<string>('--------------');
   const [dayOneFieldTwo, setDayOneFieldTwo] = useState<string>('--------------');
@@ -58,6 +57,8 @@ export default function Home() {
   useEffect(() => {
     const getData = async () => {
       const fetchGeocodingData = await getGeocodingData('Stockton');
+
+      setCurrentUnit('°F');
 
       const latitude: number = fetchGeocodingData[0].lat;
       const longitude: number = fetchGeocodingData[0].lon;
