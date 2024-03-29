@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { NumberFloorString, capitalizeWordLetters, getGeocodingData, getWeatherData, getWeatherForecastData } from "@/app/utils/dataservice";
+import { NumberFloorString, capitalizeWordLetters, convertUnixToLocalDate, convertUnixToLocalDateAlt, getGeocodingData, getWeatherData, getWeatherForecastData } from "@/app/utils/dataservice";
 import SearchBarComponent from "./components/SearchBarComponent";
 import ForecastComponent from "./components/ForecastComponent";
 import Image from "next/image";
@@ -18,38 +18,39 @@ export default function Home() {
   const [currentUnit, setCurrentUnit] = useState<string>('°F');
   const [minTemp, setMinTemp] = useState<number>(0);
   const [maxTemp, setMaxTemp] = useState<number>(0);
+  const [currentImage, setCurrentImage] = useState<string>('');
   const [weatherStatus, setWeatherStatus] = useState<string>('--------------');
   const [tempToggle, setTempToggle] = useState<boolean>(false);
 
-  const[dayOneFieldOne,   setDayOneFieldOne] = useState<string>('--------------');
-  const[dayOneFieldTwo,   setDayOneFieldTwo] = useState<string>('--------------');
-  const[dayOneFieldThree, setDayOneFieldThree] = useState<string>('----');
-  const[dayOneFieldFour,  setDayOneFieldFour] = useState<string>('----');
-  const[dayOneFieldFive,  setDayOneFieldFive] = useState<string>('----');
+  const [dayOneFieldOne, setDayOneFieldOne] = useState<string>('--------------');
+  const [dayOneFieldTwo, setDayOneFieldTwo] = useState<string>('--------------');
+  const [dayOneFieldThree, setDayOneFieldThree] = useState<string>('----');
+  const [dayOneFieldFour, setDayOneFieldFour] = useState<string>('');
+  const [dayOneFieldFive, setDayOneFieldFive] = useState<string>('----');
 
-  const[dayTwoFieldOne,   setDayTwoFieldOne] = useState<string>('--------------');
-  const[dayTwoFieldTwo,   setDayTwoFieldTwo] = useState<string>('--------------');
-  const[dayTwoFieldThree, setDayTwoFieldThree] = useState<string>('----');
-  const[dayTwoFieldFour,  setDayTwoFieldFour] = useState<string>('----');
-  const[dayTwoFieldFive,  setDayTwoFieldFive] = useState<string>('----');
+  const [dayTwoFieldOne, setDayTwoFieldOne] = useState<string>('--------------');
+  const [dayTwoFieldTwo, setDayTwoFieldTwo] = useState<string>('--------------');
+  const [dayTwoFieldThree, setDayTwoFieldThree] = useState<string>('----');
+  const [dayTwoFieldFour, setDayTwoFieldFour] = useState<string>('');
+  const [dayTwoFieldFive, setDayTwoFieldFive] = useState<string>('----');
 
-  const[dayThreeFieldOne,   setDayThreeFieldOne] = useState<string>('--------------');
-  const[dayThreeFieldTwo,   setDayThreeFieldTwo] = useState<string>('--------------');
-  const[dayThreeFieldThree, setDayThreeFieldThree] = useState<string>('----');
-  const[dayThreeFieldFour,  setDayThreeFieldFour] = useState<string>('----');
-  const[dayThreeFieldFive,  setDayThreeFieldFive] = useState<string>('----');
+  const [dayThreeFieldOne, setDayThreeFieldOne] = useState<string>('--------------');
+  const [dayThreeFieldTwo, setDayThreeFieldTwo] = useState<string>('--------------');
+  const [dayThreeFieldThree, setDayThreeFieldThree] = useState<string>('----');
+  const [dayThreeFieldFour, setDayThreeFieldFour] = useState<string>('');
+  const [dayThreeFieldFive, setDayThreeFieldFive] = useState<string>('----');
 
-  const[dayFourFieldOne,   setDayFourFieldOne] = useState<string>('--------------');
-  const[dayFourFieldTwo,   setDayFourFieldTwo] = useState<string>('--------------');
-  const[dayFourFieldThree, setDayFourFieldThree] = useState<string>('----');
-  const[dayFourFieldFour,  setDayFourFieldFour] = useState<string>('----');
-  const[dayFourFieldFive,  setDayFourFieldFive] = useState<string>('----');
+  const [dayFourFieldOne, setDayFourFieldOne] = useState<string>('--------------');
+  const [dayFourFieldTwo, setDayFourFieldTwo] = useState<string>('--------------');
+  const [dayFourFieldThree, setDayFourFieldThree] = useState<string>('----');
+  const [dayFourFieldFour, setDayFourFieldFour] = useState<string>('');
+  const [dayFourFieldFive, setDayFourFieldFive] = useState<string>('----');
 
-  const[dayFiveFieldOne,   setDayFiveFieldOne] = useState<string>('--------------');
-  const[dayFiveFieldTwo,   setDayFiveFieldTwo] = useState<string>('--------------');
-  const[dayFiveFieldThree, setDayFiveFieldThree] = useState<string>('----');
-  const[dayFiveFieldFour,  setDayFiveFieldFour] = useState<string>('----');
-  const[dayFiveFieldFive,  setDayFiveFieldFive] = useState<string>('----');
+  const [dayFiveFieldOne, setDayFiveFieldOne] = useState<string>('--------------');
+  const [dayFiveFieldTwo, setDayFiveFieldTwo] = useState<string>('--------------');
+  const [dayFiveFieldThree, setDayFiveFieldThree] = useState<string>('----');
+  const [dayFiveFieldFour, setDayFiveFieldFour] = useState<string>('');
+  const [dayFiveFieldFive, setDayFiveFieldFive] = useState<string>('----');
 
   useEffect(() => {
     const getData = async () => {
@@ -64,7 +65,10 @@ export default function Home() {
       const mainCityName: string = fetchWeatherData.name;
       setCityName(mainCityName);
 
-      const mainStateName: string = fetchGeocodingData[0].state + ', ' + fetchGeocodingData[0].country; 
+      const mainImageName: string = `https://openweathermap.org/img/wn/${fetchWeatherData.weather[0].icon}@4x.png`;
+      setCurrentImage(mainImageName);
+
+      const mainStateName: string = fetchGeocodingData[0].state + ', ' + fetchGeocodingData[0].country;
       setStateName(mainStateName);
 
       const mainTempConvert: number = Math.floor(fetchWeatherData.main.feels_like);
@@ -80,10 +84,37 @@ export default function Home() {
       setWeatherStatus(weatherDescription);
 
       setCurrentWeather(fetchWeatherData);
-
       setForecastWeather(fetchForecastData);
 
-      setDayOneFieldThree(String(Math.floor(fetchForecastData.list[0].main.feels_like)) + currentUnit);
+      setDayOneFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[0].dt));
+      setDayTwoFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[12].dt));
+      setDayThreeFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[18].dt));
+      setDayFourFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[24].dt));
+      setDayFiveFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[32].dt));
+
+      setDayOneFieldTwo(convertUnixToLocalDate(fetchForecastData.list[0].dt));
+      setDayTwoFieldTwo(convertUnixToLocalDate(fetchForecastData.list[12].dt));
+      setDayThreeFieldTwo(convertUnixToLocalDate(fetchForecastData.list[18].dt));
+      setDayFourFieldTwo(convertUnixToLocalDate(fetchForecastData.list[24].dt));
+      setDayFiveFieldTwo(convertUnixToLocalDate(fetchForecastData.list[32].dt));
+
+      setDayOneFieldThree(NumberFloorString(fetchForecastData.list[0].main.feels_like) + currentUnit);
+      setDayTwoFieldThree(NumberFloorString(fetchForecastData.list[12].main.feels_like) + currentUnit);
+      setDayThreeFieldThree(NumberFloorString(fetchForecastData.list[18].main.feels_like) + currentUnit);
+      setDayFourFieldThree(NumberFloorString(fetchForecastData.list[24].main.feels_like) + currentUnit);
+      setDayFiveFieldThree(NumberFloorString(fetchForecastData.list[32].main.feels_like) + currentUnit);
+
+      setDayOneFieldFour(fetchForecastData.list[0].weather[0].icon);
+      setDayTwoFieldFour(fetchForecastData.list[12].weather[0].icon);
+      setDayThreeFieldFour(fetchForecastData.list[18].weather[0].icon);
+      setDayFourFieldFour(fetchForecastData.list[24].weather[0].icon);
+      setDayFiveFieldFour(fetchForecastData.list[32].weather[0].icon);
+
+      setDayOneFieldFive(capitalizeWordLetters(fetchForecastData.list[0].weather[0].description));
+      setDayTwoFieldFive(capitalizeWordLetters(fetchForecastData.list[12].weather[0].description));
+      setDayThreeFieldFive(capitalizeWordLetters(fetchForecastData.list[18].weather[0].description));
+      setDayFourFieldFive(capitalizeWordLetters(fetchForecastData.list[24].weather[0].description));
+      setDayFiveFieldFive(capitalizeWordLetters(fetchForecastData.list[32].weather[0].description));
     }
 
     getData();
@@ -96,11 +127,18 @@ export default function Home() {
       <div className="pt-10 px-3 sm:px-10">
         <div className="mt-10">
           <div className="w-full h-auto p-10">
-            <h1 className="text-white text-4xl text-center sm:text-left">{cityName}</h1>
-            <h2 className="text-white text-1xl text-center sm:text-left">{stateName}</h2>
-            <p className="text-white text-8xl text-center sm:text-left">{currentTemp}{currentUnit}</p>
-            <p className="text-white text-xl text-center sm:text-left">H: {maxTemp}{currentUnit} L: {minTemp}{currentUnit}</p>
-            <p className="text-white text-2xl text-center sm:text-left">{weatherStatus}</p>
+            <div className="grid grid-cols-3">
+              <div>
+                <h1 className="text-white text-4xl text-center sm:text-left">{cityName}</h1>
+                <h2 className="text-white text-1xl text-center sm:text-left">{stateName}</h2>
+                <p className="text-white text-8xl text-center sm:text-left">{currentTemp}{currentUnit}</p>
+                <p className="text-white text-xl text-center sm:text-left">H: {maxTemp}{currentUnit} L: {minTemp}{currentUnit}</p>
+                <p className="text-white text-2xl text-center sm:text-left">{weatherStatus}</p>
+              </div>
+              <div>
+                <Image src={currentImage} width={200} height={200} alt="Weather Icon" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -110,11 +148,11 @@ export default function Home() {
           <div className="w-full h-[32rem] px-10 py-5">
             <div className="flex justify-center">
               <div className="flex flex-row space-x-20">
-                <ForecastComponent dayweek={dayOneFieldOne} daymonth={dayOneFieldTwo} daytemp={dayOneFieldThree} daystat={dayOneFieldFive} dayicon={dayOneFieldFour}/>
-                <ForecastComponent dayweek={dayTwoFieldOne} daymonth={dayTwoFieldTwo} daytemp={dayTwoFieldThree} daystat={dayTwoFieldFive} dayicon={dayTwoFieldFour}/>
-                <ForecastComponent dayweek={dayThreeFieldOne} daymonth={dayThreeFieldTwo} daytemp={dayTwoFieldThree} daystat={dayThreeFieldFive} dayicon={dayThreeFieldFour}/>
-                <ForecastComponent dayweek={dayFourFieldOne} daymonth={dayFourFieldTwo} daytemp={dayTwoFieldThree} daystat={dayFourFieldFive} dayicon={dayFourFieldFour}/>
-                <ForecastComponent dayweek={dayFiveFieldOne} daymonth={dayFiveFieldTwo} daytemp={dayTwoFieldThree} daystat={dayFiveFieldFive} dayicon={dayFiveFieldFour}/>
+                <ForecastComponent dayweek={dayOneFieldOne} daymonth={dayOneFieldTwo} daytemp={dayOneFieldThree} daystat={dayOneFieldFive} dayicon={dayOneFieldFour} />
+                <ForecastComponent dayweek={dayTwoFieldOne} daymonth={dayTwoFieldTwo} daytemp={dayTwoFieldThree} daystat={dayTwoFieldFive} dayicon={dayTwoFieldFour} />
+                <ForecastComponent dayweek={dayThreeFieldOne} daymonth={dayThreeFieldTwo} daytemp={dayThreeFieldThree} daystat={dayThreeFieldFive} dayicon={dayThreeFieldFour} />
+                <ForecastComponent dayweek={dayFourFieldOne} daymonth={dayFourFieldTwo} daytemp={dayFourFieldThree} daystat={dayFourFieldFive} dayicon={dayFourFieldFour} />
+                <ForecastComponent dayweek={dayFiveFieldOne} daymonth={dayFiveFieldTwo} daytemp={dayFiveFieldThree} daystat={dayFiveFieldFive} dayicon={dayFiveFieldFour} />
               </div>
             </div>
           </div>
