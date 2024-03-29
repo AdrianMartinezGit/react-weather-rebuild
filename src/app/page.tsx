@@ -10,7 +10,7 @@ import { IWeatherData, IWeatherForecastData } from "@/interfaces/interface";
 
 import faveButton from '@/assets/AddFavButton.svg'
 import unfaveButton from '@/assets/RemoveFavButton.svg'
-import { saveToLocalStorage } from "./utils/localstorage";
+import { getLocalStorage, removeLocalStorage, saveToLocalStorage } from "./utils/localstorage";
 
 
 export default function Home() {
@@ -24,6 +24,8 @@ export default function Home() {
   const [maxTemp, setMaxTemp] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<string>('');
   const [weatherStatus, setWeatherStatus] = useState<string>('--------------');
+
+  const [faveImage, setFaveImage] = useState<string>(faveButton)
 
   const [dayOneFieldOne, setDayOneFieldOne] = useState<string>('--------------');
   const [dayOneFieldTwo, setDayOneFieldTwo] = useState<string>('--------------');
@@ -91,6 +93,15 @@ export default function Home() {
       setCurrentWeather(fetchWeatherData);
       setForecastWeather(fetchForecastData);
 
+      let favorites = getLocalStorage();
+      const currentCity: any = fetchWeatherData.name;
+  
+      if (favorites.includes(currentCity)) {
+        setFaveImage(unfaveButton);
+      } else {
+        setFaveImage(faveButton);
+      }
+
       setDayOneFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[0].dt));
       setDayTwoFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[12].dt));
       setDayThreeFieldOne(convertUnixToLocalDateAlt(fetchForecastData.list[18].dt));
@@ -126,13 +137,22 @@ export default function Home() {
   }, []);
 
   const handleFavorite = () => {
-    saveToLocalStorage(cityName);
+    let favorites = getLocalStorage();
+    const currentCity: any = currentWeather?.name;
+
+    if (favorites.includes(currentCity)) {
+      setFaveImage(faveButton);
+      removeLocalStorage(currentCity);
+    } else {
+      setFaveImage(unfaveButton);
+      saveToLocalStorage(currentCity);
+    }
   }
 
   return (
     <>
       <div className="gradient-weather-backdrop"></div>
-      <SearchBarComponent routerURL={"./pages/favorites"} searchURL={'./pages/search'}/>
+      <SearchBarComponent routerURL={"./pages/favorites"} searchURL={'./pages/search'} />
       <div className="pt-10 px-3 sm:px-10">
         <div className="mt-16 sm:mt-10">
           <div className="w-full h-auto p-10">
@@ -140,7 +160,7 @@ export default function Home() {
               <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2">
                   <h1 className="text-white text-4xl text-center sm:text-left">{cityName}</h1>
-                  <Image src={faveButton} className="cursor-pointer absolute w-8 h-8 sm:w-12 sm:h-12 max-sm:mt-2 sm:mt-2 ml-56 sm:ml-[11rem]" alt="Favorite Button" onClick={handleFavorite} />
+                  <Image src={faveImage} className="cursor-pointer absolute w-8 h-8 sm:w-12 sm:h-12 max-sm:mt-2 sm:mt-2 ml-56 sm:ml-[11rem]" alt="Favorite Button" onClick={handleFavorite} />
                 </div>
                 <h2 className="text-white text-1xl text-center sm:text-left">{stateName}</h2>
                 <p className="text-white text-8xl text-center sm:text-left">{currentTemp}{currentUnit}</p>
@@ -163,7 +183,7 @@ export default function Home() {
       </div>
 
       <div className="px-10 sm:px-20">
-        <hr/>
+        <hr />
       </div>
 
       <div className="px-3 sm:px-10">
