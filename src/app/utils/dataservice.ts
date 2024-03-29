@@ -21,7 +21,7 @@ export const getWeatherForecastData = async (lat: number, lon: number) => {
 } 
 
 export const getGeocodingData = async (cityname: string) => {
-    const promise = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityname}&appid=${api_key}&units=imperial`);
+    const promise = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityname}&appid=${api_key}&units=imperial`);
     const response: IGeocodeData[] = await promise.json();
     
     console.log(response);
