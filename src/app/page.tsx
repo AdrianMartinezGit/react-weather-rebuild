@@ -9,6 +9,11 @@ import Image from "next/image";
 import sunIcon from '@/assets/SunIcon.png'
 import { IWeatherData, IWeatherForecastData } from "@/interfaces/interface";
 
+import faveButton from '@/assets/AddFavButton.png'
+import unfaveButton from '@/assets/RemoveFavButton.png'
+import { Button } from "flowbite-react";
+
+
 export default function Home() {
   const [currentWeather, setCurrentWeather] = useState<IWeatherData>();
   const [forecastWeather, setForecastWeather] = useState<IWeatherForecastData>();
@@ -125,29 +130,43 @@ export default function Home() {
       <div className="gradient-weather-backdrop"></div>
       <SearchBarComponent />
       <div className="pt-10 px-3 sm:px-10">
-        <div className="mt-10">
+        <div className="mt-16 sm:mt-10">
           <div className="w-full h-auto p-10">
-            <div className="grid grid-cols-3">
+            <div className="grid min-w-[640px]:grid-rows-3 sm:grid-cols-3">
               <div>
-                <h1 className="text-white text-4xl text-center sm:text-left">{cityName}</h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2">
+                  <h1 className="text-white text-4xl text-center sm:text-left">{cityName}</h1>
+                  <Image src={faveButton} className="cursor-pointer absolute w-8 h-8 sm:w-12 sm:h-12 max-sm:mt-2 sm:mt-2 ml-56 sm:ml-[11rem]" alt="Favorite Button" />
+                </div>
                 <h2 className="text-white text-1xl text-center sm:text-left">{stateName}</h2>
                 <p className="text-white text-8xl text-center sm:text-left">{currentTemp}{currentUnit}</p>
+                <div className="block sm:hidden">
+                  <div className="flex justify-center">
+                    <Image src={currentImage} width={200} height={200} alt="Weather Icon" />
+                  </div>
+                </div>
                 <p className="text-white text-xl text-center sm:text-left">H: {maxTemp}{currentUnit} L: {minTemp}{currentUnit}</p>
                 <p className="text-white text-2xl text-center sm:text-left">{weatherStatus}</p>
               </div>
-              <div>
-                <Image src={currentImage} width={200} height={200} alt="Weather Icon" />
+              <div className="hidden sm:block">
+                <div className="flex justify-center">
+                  <Image src={currentImage} width={200} height={200} alt="Weather Icon" />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+      <div className="px-10 sm:px-20">
+        <hr/>
+      </div>
+
       <div className="px-3 sm:px-10">
         <div className="mt-10">
           <div className="w-full h-[32rem] px-10 py-5">
             <div className="flex justify-center">
-              <div className="flex flex-row space-x-20">
+              <div className="flex max-sm:flex-col max-sm:space-y-3 sm:flex-row sm:space-x-20">
                 <ForecastComponent dayweek={dayOneFieldOne} daymonth={dayOneFieldTwo} daytemp={dayOneFieldThree} daystat={dayOneFieldFive} dayicon={dayOneFieldFour} />
                 <ForecastComponent dayweek={dayTwoFieldOne} daymonth={dayTwoFieldTwo} daytemp={dayTwoFieldThree} daystat={dayTwoFieldFive} dayicon={dayTwoFieldFour} />
                 <ForecastComponent dayweek={dayThreeFieldOne} daymonth={dayThreeFieldTwo} daytemp={dayThreeFieldThree} daystat={dayThreeFieldFive} dayicon={dayThreeFieldFour} />
