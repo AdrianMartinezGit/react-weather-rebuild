@@ -6,11 +6,6 @@ import { getLocalStorage } from '@/app/utils/localstorage'
 import React, { useEffect } from 'react'
 
 export default function page() {
-
-  useEffect(() => {
-    
-  }, [])
-
   return (
     <>
       <div className='gradient-weather-backdrop'></div>
