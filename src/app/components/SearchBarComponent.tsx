@@ -28,7 +28,7 @@ export default function SearchBarComponent(props: ISearchBarProp) {
         if (props.searchURL !== 'refresh') {
           router.push(props.searchURL);
         } else {
-          router.refresh();
+          window.location.reload();
         }
       }
     }
