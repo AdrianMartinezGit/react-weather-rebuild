@@ -6,12 +6,10 @@ import SearchBarComponent from "./components/SearchBarComponent";
 import ForecastComponent from "./components/ForecastComponent";
 import Image from "next/image";
 
-import sunIcon from '@/assets/SunIcon.png'
 import { IWeatherData, IWeatherForecastData } from "@/interfaces/interface";
 
-import faveButton from '@/assets/AddFavButton.png'
-import unfaveButton from '@/assets/RemoveFavButton.png'
-import { Button } from "flowbite-react";
+import faveButton from '@/assets/AddFavButton.svg'
+import unfaveButton from '@/assets/RemoveFavButton.svg'
 
 
 export default function Home() {
@@ -128,7 +126,7 @@ export default function Home() {
   return (
     <>
       <div className="gradient-weather-backdrop"></div>
-      <SearchBarComponent />
+      <SearchBarComponent routerURL={"./pages/favorites"} searchURL={'./pages/search'}/>
       <div className="pt-10 px-3 sm:px-10">
         <div className="mt-16 sm:mt-10">
           <div className="w-full h-auto p-10">

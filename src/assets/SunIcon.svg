@@ -1,0 +1,11 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="48" cy="48" r="21.7263" fill="#FFF72E"/>
+<rect x="45.4737" width="6.06316" height="22.2316" rx="3.03158" fill="#FFF72E"/>
+<rect x="73.7684" y="51.5368" width="6.06316" height="22.2316" rx="3.03158" transform="rotate(-90 73.7684 51.5368)" fill="#FFF72E"/>
+<rect y="51.5368" width="6.06316" height="22.2316" rx="3.03158" transform="rotate(-90 0 51.5368)" fill="#FFF72E"/>
+<rect x="10.1053" y="14.3926" width="6.06316" height="22.2316" rx="3.03158" transform="rotate(-45 10.1053 14.3926)" fill="#FFF72E"/>
+<rect x="81.4043" y="10.1053" width="6.06316" height="22.2316" rx="3.03158" transform="rotate(45 81.4043 10.1053)" fill="#FFF72E"/>
+<rect x="25.8254" y="65.6842" width="6.06316" height="22.2316" rx="3.03158" transform="rotate(45 25.8254 65.6842)" fill="#FFF72E"/>
+<rect x="65.6842" y="69.9715" width="6.06316" height="22.2316" rx="3.03158" transform="rotate(-45 65.6842 69.9715)" fill="#FFF72E"/>
+<rect x="45.4737" y="73.7684" width="6.06316" height="22.2316" rx="3.03158" fill="#FFF72E"/>
+</svg>

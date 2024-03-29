@@ -115,5 +115,9 @@ export interface IWeatherForecastProps {
     daytemp: string,
     dayicon: string,
     daystat: string
+}
 
+export interface ISearchBarProp {
+    routerURL: string,
+    searchURL: string
 }
