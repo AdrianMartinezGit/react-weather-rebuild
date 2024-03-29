@@ -121,3 +121,7 @@ export interface ISearchBarProp {
     routerURL: string,
     searchURL: string
 }
+
+export interface IFavoriteProps {
+    cityname: string
+}

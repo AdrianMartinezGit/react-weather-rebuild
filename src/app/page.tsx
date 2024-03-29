@@ -10,6 +10,7 @@ import { IWeatherData, IWeatherForecastData } from "@/interfaces/interface";
 
 import faveButton from '@/assets/AddFavButton.svg'
 import unfaveButton from '@/assets/RemoveFavButton.svg'
+import { saveToLocalStorage } from "./utils/localstorage";
 
 
 export default function Home() {
@@ -124,6 +125,10 @@ export default function Home() {
     getData();
   }, []);
 
+  const handleFavorite = () => {
+    saveToLocalStorage(cityName);
+  }
+
   return (
     <>
       <div className="gradient-weather-backdrop"></div>
@@ -135,7 +140,7 @@ export default function Home() {
               <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2">
                   <h1 className="text-white text-4xl text-center sm:text-left">{cityName}</h1>
-                  <Image src={faveButton} className="cursor-pointer absolute w-8 h-8 sm:w-12 sm:h-12 max-sm:mt-2 sm:mt-2 ml-56 sm:ml-[11rem]" alt="Favorite Button" />
+                  <Image src={faveButton} className="cursor-pointer absolute w-8 h-8 sm:w-12 sm:h-12 max-sm:mt-2 sm:mt-2 ml-56 sm:ml-[11rem]" alt="Favorite Button" onClick={handleFavorite} />
                 </div>
                 <h2 className="text-white text-1xl text-center sm:text-left">{stateName}</h2>
                 <p className="text-white text-8xl text-center sm:text-left">{currentTemp}{currentUnit}</p>

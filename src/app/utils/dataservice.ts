@@ -3,7 +3,7 @@ import { IGeocodeData, IWeatherData, IWeatherForecastData } from "@/interfaces/i
 const api_key = process.env.NEXT_PUBLIC_API_KEY
 
 export const getWeatherData = async (lat: number, lon: number) => {
-    const promise = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${37.958}&lon=${-121.291}&appid=${api_key}&units=imperial`);
+    const promise = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=imperial`);
     const response: IWeatherData = await promise.json();
     
     console.log(response);
