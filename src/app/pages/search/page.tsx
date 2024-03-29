@@ -14,7 +14,7 @@ export default function page() {
         <div className="mt-16 sm:mt-10">
           <div className="w-full h-auto p-10">
             <div className='flex justify-center'>
-              <h1 className='text-white text-4xl'>{localStorage.getItem('SearchResult')}</h1>
+              <h1 className='text-white text-4xl'>{}</h1>
             </div>
           </div>
         </div>
