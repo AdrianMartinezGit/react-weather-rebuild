@@ -7,8 +7,11 @@ import { NumberFloorString, capitalizeWordLetters, getGeocodingData, getWeatherD
 
 import unfaveButton from '@/assets/RemoveFavButton.svg'
 import { removeLocalStorage } from '../utils/localstorage'
+import { useRouter } from 'next/navigation'
 
 export default function FavoriteComponent(props: IFavoriteProps) {
+
+    const router = useRouter();
 
     const [cityName, setCityName] = useState<string>('--------------');
     const [timeDate, setTimeDate] = useState<string>('--:--');
@@ -59,13 +62,20 @@ export default function FavoriteComponent(props: IFavoriteProps) {
         return strTime;
     }
 
-    const handleRemove = () => {
+    const handleRemove = (e: any) => {
+        e.stopPropagation();
         removeLocalStorage(cityName);
         setTempDelete('hidden');
     }
 
+    const handleRedirect = () => {
+        //alert('Clicked ontop');
+        localStorage.setItem('SearchResult', cityName);
+        router.push('../pages/search');
+    }
+
     return (
-        <div className={`w-full h-auto bg-white p-4 rounded-[1rem] ${tempDelete}`}>
+        <div className={`w-full h-auto bg-white p-4 rounded-[1rem] cursor-pointer ${tempDelete}`} onClick={handleRedirect}>
             <div className='grid grid-cols-2'>
                 <div>
                     <h1 className="text-black text-2xl text-left font-semibold">{cityName}</h1>
